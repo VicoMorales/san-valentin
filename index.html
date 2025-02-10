@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Quieres ser mi San Valentín?</title>
+    <style>
+        @keyframes aparecer {
+            0% { opacity: 0; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #ffe6e6;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .sobre-container {
+            position: relative;
+            width: 300px;
+            height: 220px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: aparecer 1s ease-out forwards;
+        }
+        .sobre {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            background: #ff1f4d;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+            clip-path: inset(-150px 0px 0px 0px);
+            /* overflow: hidden; */
+        }
+        .capa-superior-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 300px;
+            height: 200px;
+            z-index: 4;
+            filter: drop-shadow(8px 8px 8px rgba(0, 0, 0, 0.5));
+        }
+        .capa-superior{
+            clip-path: polygon(0 0, 50% 45%, 100% 0, 100% 100%, 0 100%);
+            width: 300px;
+            height: 200px;
+            background: #ff1f4d;
+        }
+        .tapa-container{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 300px;
+            height: 100px;
+            filter: drop-shadow(8px 8px 8px rgba(0, 0, 0, 0.5));
+            cursor: pointer;
+            transition: transform 0.6s ease-in-out;
+            transform-origin: top;
+            z-index: 4;
+        }
+        .tapa {
+            background: #ff1f4d;
+            clip-path: polygon(0 10%, 0 0, 100% 0, 100% 10%, 50% 94%);
+            width: 300px;
+            height: 100px;
+        }
+        .tapa-container.abierta {
+            transform: rotateX(180deg);
+        }
+        .carta {
+            position: absolute;
+            width: 280px;
+            height: 200px;
+            background: #ffcccc;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+            color: #ff1654;
+            font-weight: bold;
+            padding: 20px;
+            bottom: 0;
+            transform: translateY(100%);
+            transition: transform 0.8s ease-in-out;
+            z-index: 3;
+        }
+        .carta.mostrar {
+            transform: translateY(-50%);
+        }
+        .boton-si {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 18px;
+            color: white;
+            background-color: #ff4d6d;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none;
+            z-index: 99;
+        }
+        .boton-si.mostrar {
+            display: block;
+        }
+        .pantalla-completa {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ff4d6d;
+            color: white;
+            font-size: 36px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+            visibility: hidden;
+            z-index: 999;
+        }
+        .pantalla-completa.mostrar {
+            opacity: 1;
+            transform: scale(1);
+            visibility: visible;
+        }
+    </style>
+</head>
+<body>
+    <div class="title">
+        <h1>¡Hola mi amor!</h1>
+        <h3>Tengo algo para ti 💕</h3>
+    </div>
+    <div class="sobre-container">
+        <div class="sobre">
+            <div class="capa-superior-container">
+                <div class="capa-superior"></div>
+            </div>
+            <div class="tapa-container" id="tapa">
+                <div class="tapa"  onclick="abrirCarta()"></div>
+            </div>
+            <div class="carta" id="carta">
+                ¡¿Quieres ser mi San Valentín?! 💖
+                <button class="boton-si" id="botonSi" onclick="mostrarPantalla()">Sí</button>
+            </div>
+        </div>
+    </div>
+    <div class="pantalla-completa" id="pantallaCompleta">
+        <h4>¡Sabía que dirías que sí! 💕</h4>
+        <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExa2syeHRvb2tmdHd3djZuNDRuNG50ZnowMWdyeDlzZGo5ejVkMXhhaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/jUim5c2QWv7FHJlLX8/giphy.gif" alt="GIF divertido">
+    </div>
+    <script>
+        function abrirCarta() {
+            document.getElementById('tapa').classList.add('abierta');
+            
+            setTimeout(() => {
+                document.getElementById('tapa').style.zIndex = 3;
+                document.getElementById('botonSi').classList.add('mostrar');
+                document.getElementById('carta').classList.add('mostrar');
+            }, 400);
+        }
+        function mostrarPantalla() {
+            console.log('mostrar pantalla');
+            document.getElementById('pantallaCompleta').classList.add('mostrar');
+        }
+    </script>
+</body>
+</html>
